@@ -7,7 +7,6 @@ import Maintenance from '#/views/maintainence'
 import { ENV_MAP } from '#/constants/env'
 import { NAME_MAP } from '#/constants/name'
 
-
 import jsonLd from '#/libs/metadata'
 
 import { outfit } from '#/styles/fonts'
