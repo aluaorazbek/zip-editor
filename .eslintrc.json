@@ -1,0 +1,130 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"extends": [
+		"next/core-web-vitals",
+		"airbnb",
+		"airbnb-typescript",
+		"airbnb/hooks",
+		"plugin:@tanstack/eslint-plugin-query/recommended",
+		"prettier"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"plugins": ["@typescript-eslint", "@tanstack/query"],
+	"ignorePatterns": [
+		"node_modules/**/*",
+		"prettier.config.js",
+		"postcss.config.js",
+		"tailwind.config.js",
+		"next.config.js"
+	],
+	"rules": {
+		"react/react-in-jsx-scope": "off",
+		"react/require-default-props": "off",
+		"react/jsx-props-no-spreading": "off",
+		"react-hooks/exhaustive-deps": "off",
+		"import/no-cycle": "off",
+		"import/prefer-default-export": "off",
+		"import/no-extraneous-dependencies": "off",
+		"no-param-reassign": "off",
+		"jsx-a11y/label-has-associated-control": [
+			2,
+			{
+				"some": ["nesting", "id"]
+			}
+		],
+		"import/order": [
+			"error",
+			{
+				"pathGroups": [
+					{
+						"pattern": "#/public/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/app/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/components/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/views/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/providers/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/constants/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/services/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/hooks/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/stores/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/locales/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/utils/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/libs/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/types/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/styles/**",
+						"group": "internal",
+						"position": "after"
+					},
+					{
+						"pattern": "#/**",
+						"group": "internal",
+						"position": "after"
+					}
+				],
+				"newlines-between": "always",
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				}
+			}
+		]
+	}
+}

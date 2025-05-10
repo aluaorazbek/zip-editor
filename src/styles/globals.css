@@ -1,0 +1,20 @@
+@import 'react-toastify/dist/ReactToastify.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--color-default: 48 48 48;
+		--color-black: 48 48 48;
+		--color-white: 255 255 255;
+		--color-error: 250 77 77;
+		--color-success: 79 188 90;
+		--color-warning: 219 129 46;
+	}
+
+	body {
+		@apply text-default antialiased;
+	}
+}
