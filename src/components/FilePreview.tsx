@@ -17,6 +17,32 @@ interface FilePreviewProps {
 	onContentChange: (content: string) => void
 }
 
+const getLanguageFromExtension = (filename: string): string => {
+	const ext = filename.toLowerCase().split('.').pop() || ''
+	const languageMap: Record<string, string> = {
+		js: 'javascript',
+		jsx: 'javascript',
+		ts: 'typescript',
+		tsx: 'typescript',
+		html: 'html',
+		css: 'css',
+		json: 'json',
+		md: 'markdown',
+		py: 'python',
+		java: 'java',
+		c: 'c',
+		cpp: 'cpp',
+		h: 'c',
+		hpp: 'cpp',
+		xml: 'xml',
+		yaml: 'yaml',
+		yml: 'yaml',
+	}
+	return languageMap[ext] || 'plaintext'
+}
+
+const MONACO_THEMES = ['vs', 'vs-dark', 'hc-black', 'hc-light'] as const
+
 export function FilePreview({
 	file,
 	content,
@@ -25,6 +51,8 @@ export function FilePreview({
 	const fileType = getFileType(file.name)
 	const [imageUrl, setImageUrl] = useState<string>('')
 	const docxContainerRef = useRef<HTMLDivElement>(null)
+	const [currentTheme, setCurrentTheme] =
+		useState<(typeof MONACO_THEMES)[number]>('vs-dark')
 
 	useEffect(() => {
 		if (imageUrl) {
@@ -124,18 +152,75 @@ export function FilePreview({
 
 	if (fileType === 'text') {
 		return (
-			<MonacoEditor
-				height="100%"
-				language="plaintext"
-				value={typeof content === 'string' ? content : ''}
-				onChange={value => onContentChange(value || '')}
-				theme="vs-dark"
-				options={{
-					minimap: { enabled: false },
-					fontSize: 14,
-					wordWrap: 'on',
-				}}
-			/>
+			<div className="relative h-full">
+				<select
+					value={currentTheme}
+					onChange={e =>
+						setCurrentTheme(e.target.value as (typeof MONACO_THEMES)[number])
+					}
+					className="absolute right-4 top-4 z-10 rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-800"
+				>
+					{MONACO_THEMES.map(theme => (
+						<option key={theme} value={theme}>
+							{theme}
+						</option>
+					))}
+				</select>
+
+				<MonacoEditor
+					height="100%"
+					language={getLanguageFromExtension(file.name)}
+					value={typeof content === 'string' ? content : ''}
+					onChange={value => onContentChange(value || '')}
+					theme={currentTheme}
+					options={{
+						minimap: { enabled: false },
+						fontSize: 14,
+						wordWrap: 'on',
+						automaticLayout: true,
+						suggestOnTriggerCharacters: true,
+						quickSuggestions: true,
+						parameterHints: { enabled: true },
+						formatOnPaste: true,
+						formatOnType: true,
+						snippetSuggestions: 'inline',
+						wordBasedSuggestions: 'currentDocument',
+						tabSize: 2,
+						scrollBeyondLastLine: false,
+						renderWhitespace: 'selection',
+						renderControlCharacters: true,
+						renderLineHighlight: 'all',
+						scrollbar: {
+							vertical: 'visible',
+							horizontal: 'visible',
+							useShadows: true,
+							verticalScrollbarSize: 10,
+							horizontalScrollbarSize: 10,
+						},
+					}}
+					beforeMount={monaco => {
+						monaco.languages.typescript.javascriptDefaults.setEagerModelSync(
+							true,
+						)
+						monaco.languages.typescript.typescriptDefaults.setEagerModelSync(
+							true,
+						)
+
+						monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions(
+							{
+								noSemanticValidation: false,
+								noSyntaxValidation: false,
+							},
+						)
+						monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
+							{
+								noSemanticValidation: false,
+								noSyntaxValidation: false,
+							},
+						)
+					}}
+				/>
+			</div>
 		)
 	}
 
