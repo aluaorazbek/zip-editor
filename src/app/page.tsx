@@ -39,7 +39,7 @@ export default function HomePage() {
 			{/* Drop */}
 			<div
 				{...getRootProps()}
-				className={`cursor-pointer border-2 border-dashed p-8 text-center transition-colors
+				className={`cursor-pointer bg-gray-100 border-2 border-dashed p-8 text-center transition-colors
               ${
 								isDragActive
 									? 'border-blue-500 bg-blue-50'
@@ -53,7 +53,7 @@ export default function HomePage() {
 
 			<div className="flex flex-1 overflow-hidden">
 				{/* ZIP Tree structue */}
-				<div className="w-64 overflow-y-auto border-r p-4">
+				<div className="w-64 overflow-y-auto border-r p-4 bg-gray-200">
 					{fileTree.map(node => (
 						<FileTreeItem
 							key={node.path}

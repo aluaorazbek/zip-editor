@@ -27,31 +27,10 @@ export const useZipFile = () => {
 
 			const files = Object.keys(loadedZip.files).sort()
 
-			let commonPrefix = ''
-			if (files.length > 0) {
-				const firstFile = files[0]
-				const lastFile = files[files.length - 1]
-				let i = 0
-				while (
-					i < firstFile.length &&
-					i < lastFile.length &&
-					firstFile[i] === lastFile[i]
-				) {
-					i++
-				}
-				commonPrefix = firstFile.substring(0, i).split('/')[0]
-				if (commonPrefix && !commonPrefix.includes('.')) {
-					commonPrefix += '/'
-				} else {
-					commonPrefix = ''
-				}
-			}
-
 			files.forEach((filePath: string) => {
-				const relativePath = commonPrefix
-					? filePath.substring(commonPrefix.length)
-					: filePath
-				const parts = relativePath.split('/').filter(Boolean)
+				if (filePath.endsWith('/')) return
+
+				const parts = filePath.split('/').filter(Boolean)
 				let currentNode = rootNode
 
 				for (let i = 0; i < parts.length; i++) {
