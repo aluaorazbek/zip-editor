@@ -124,6 +124,27 @@ export const useZipFile = () => {
 		}
 	}
 
+	const handleDownload = async () => {
+		if (zipFile) {
+			if (selectedFile && getFileType(selectedFile.name) === 'text') {
+				const file = zipFile.file(selectedFile.path)
+				if (file) {
+					zipFile.file(selectedFile.path, editorContent)
+				}
+			}
+
+			const blob = await zipFile.generateAsync({ type: 'blob' })
+			const url = URL.createObjectURL(blob)
+			const a = document.createElement('a')
+			a.href = url
+			a.download = 'edited.zip'
+			document.body.appendChild(a)
+			a.click()
+			document.body.removeChild(a)
+			URL.revokeObjectURL(url)
+		}
+	}
+
 	return {
 		zipFile,
 		fileTree,
@@ -133,5 +154,6 @@ export const useZipFile = () => {
 		setEditorContent,
 		handleFileSelect,
 		processZipFile,
+		handleDownload,
 	}
 }

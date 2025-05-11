@@ -16,6 +16,8 @@ export default function HomePage() {
 		processZipFile,
 		fileContent,
 		setEditorContent,
+		zipFile,
+		handleDownload,
 	} = useZipFile()
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -87,9 +89,15 @@ export default function HomePage() {
 			</div>
 
 			{/* Download button */}
-			<button className="fixed bottom-4 right-4 rounded-full bg-blue-500 p-3 text-white shadow-lg transition-colors hover:bg-blue-600">
-				<FiDownload className="text-xl" />
-			</button>
+			{zipFile && (
+				<button
+					type="button"
+					onClick={handleDownload}
+					className="fixed bottom-4 right-4 rounded-full bg-blue-500 p-3 text-white shadow-lg transition-colors hover:bg-blue-600"
+				>
+					<FiDownload className="text-xl" />
+				</button>
+			)}
 		</main>
 	)
 }
