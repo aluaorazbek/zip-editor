@@ -3,8 +3,7 @@ import { useState } from 'react'
 
 import { getFileType, sortTree } from '#/utils/fileUtils'
 
-import { FileContent, FileNode } from '#/types/file'
-
+import { FileNode, FileContent } from '#/types/file'
 
 export const useZipFile = () => {
 	const [zipFile, setZipFile] = useState<JSZip | null>(null)
@@ -128,8 +127,9 @@ export const useZipFile = () => {
 	return {
 		zipFile,
 		fileTree,
-		editorContent,
 		selectedFile,
+		fileContent,
+		editorContent,
 		setEditorContent,
 		handleFileSelect,
 		processZipFile,
